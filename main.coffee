@@ -1,25 +1,23 @@
-# Import file "medium"
 sketch = Framer.Importer.load("imported/medium@1x")
 
-backgroundA = new BackgroundLayer
+new BackgroundLayer
 	backgroundColor: "rgba(255,255,255,1)"
 
 page = new PageComponent
-	y: sketch.navBar.height
-	width: Screen.width
-	height: Screen.height - sketch.navBar.height
-	scrollVertical: false
+	size: Screen.size
+	contentInset:
+		top: sketch.navBar.height
 	directionLock: true
+	scrollVertical: false
 
-for index in [0...3]
+for index in [1..3]
 	scroll = new ScrollComponent
 		size: page.size
-		scrollHorizontal: false
-		directionLock: true
 		contentInset:
 			bottom: 100
-
-	sketch["scroll#{index + 1}"].superLayer = scroll.content
+		directionLock: true
+		scrollHorizontal: false
+	scroll.content.addChild sketch["scroll#{index}"]
 	page.addPage(scroll)
 
 sketch.navBar.on Events.Click, ->
